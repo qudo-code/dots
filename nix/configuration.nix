@@ -2,39 +2,34 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{inputs, config, ... }:
+{inputs, config, machine, pkgs, unstable, ... }:
 let
-  system = "x86_64-linux";
-  pkgs = import inputs.nixpkgs {
-    inherit system;
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
-  };
-  unstable = import inputs.nixpkgs-unstable {
-    inherit system;
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
-  };
+    machine = (import ./machine.nix { inherit inputs; });
+    pkgs = machine.pkgs;
+    unstable = machine.unstable;
 in {
-  nixpkgs.config.allowUnfree = true;
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
+
+  networking.hostName = "${machine.hostname}";
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
-    git
     tree
+    git
     alacritty
     rofi-wayland
     waybar
-    unstable.zed-editor
+    machine.unstable.zed-editor
     stow
+    flameshot
   ];
 
-  users.users.qudo = {
+  users.users."${machine.user}" = {
     isNormalUser = true;
-    description = "qudo";
+    description = "${machine.user}";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
         slack
@@ -48,11 +43,19 @@ in {
     ll = "ls -l --color=tty";
     ls = "ls --color=tty";
     rebuild = "sudo nixos-rebuild switch --flake ~/.dotfiles/nix";
+    open = "nautilus";
+    ghid = "git config --global user.name '${machine.github.username}' & git config --global user.email '${machine.github.email}'";
+    # https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+    ghssh = "ssh-keygen -t ed25519 -C '${machine.github.email} -N' & eval '$(ssh-agent -s)' & ssh-add ~/.ssh/id_ed25519";
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-
+  programs.hyprland = {
+    enable = true;
+    # set the flake package
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # make sure to also set the portal package, so that they are in sync
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
 
   # Enable OpenGL
   hardware.graphics = {
@@ -94,19 +97,6 @@ in {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-  programs.hyprland = {
-    enable = true;
-    # set the flake package
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    # make sure to also set the portal package, so that they are in sync
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-  };
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -115,7 +105,7 @@ in {
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+ # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

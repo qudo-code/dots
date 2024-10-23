@@ -1,27 +1,32 @@
-# flake.nix
 {
-  description = "Buttery Crispy Flake";
+    description = "Buttery Crispy Flake";
 
-  inputs = {
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs";
-
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
-
-    hyprland.url = "github:hyprwm/Hyprland";
-  };
-
-  outputs = { nixpkgs, nixpkgs-unstable, home-manager, ... }@ inputs:
-    let
-      lib = nixpkgs.lib;
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-      unstable = import inputs.nixpkgs-unstable { inherit system; };
-    in {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; }; # this is the important part
-        modules = [ ./configuration.nix ];
-      };
+    # bring in these sources (git repos)
+    inputs = {
+        nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+        nixpkgs.url = "github:nixos/nixpkgs";
+        zen-browser.url = "github:MarceColl/zen-browser-flake";
+        hyprland.url = "github:hyprwm/Hyprland";
+        machine-flake.url = "./machine.nix";
     };
+
+    # use them to output nixos config
+    outputs = { ... }@ inputs:
+        let
+            # machineModule = import ./machine.nix;
+            machine = machine-flake.outputs {
+                inherit inputs;
+            };
+
+            pkgs = machine.pkgs;
+            system = machine.system;
+        in {
+            nixosConfigurations.nixos = pkgs.lib.nixosSystem {
+                inherit system;
+                # this passes inputs in a way that allows modules to "import" them
+                specialArgs = { inherit inputs; };
+                # modules to include
+                modules = [ ./configuration.nix ];
+            };
+        };
 }

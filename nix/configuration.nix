@@ -39,11 +39,16 @@ in {
   networking.hostName = "${hostname}";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  security.pam.services.hyprlock = {};
+  programs.hyprlock.enable = true;
+  programs.firefox.enable = true;
+
   environment.systemPackages = with pkgs; [
     tree
     git
     alacritty
     rofi-wayland
+    wofi
     waybar
     unstable.zed-editor
     slack
@@ -51,6 +56,11 @@ in {
     signal-desktop
     stow
     flameshot
+    hyprlock
+    hyprshot
+    hyprpaper
+    pavucontrol
+    nerdfonts
   ];
 
   users.users."${user}" = {
@@ -195,10 +205,6 @@ in {
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
 
   # List packages installed in system profile. To search, run:

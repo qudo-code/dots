@@ -1,3 +1,6 @@
+# NOT USED
+# Home manager isn't being used this is just boilerplate
+# Also keeping around because it made gtk dark and cool
 { config, pkgs, unstable, ... }:{
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -12,7 +15,7 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
-  
+
   home.pointerCursor = {
     gtk.enable = true;
     # x11.enable = true;
@@ -39,7 +42,7 @@
       size = 11;
     };
   };
-  
+
   # Hyprland
   programs.kitty.enable = true; # required for the default Hyprland config
   wayland.windowManager.hyprland.enable = true; # enable Hyprland

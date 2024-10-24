@@ -7,23 +7,25 @@
         nixpkgs.url = "github:nixos/nixpkgs";
         zen-browser.url = "github:MarceColl/zen-browser-flake";
         hyprland.url = "github:hyprwm/Hyprland";
-        machine-flake = {
-            url = "path:./nix/machine/flake.nix";
-        };
     };
 
     # use them to output nixos config
-    outputs = { ... }@ inputs:
+    outputs = { nixpkgs, ... }@ inputs:
         let
-            # machineModule = import ./machine.nix;
-            machine = my_thing = pkgs.callPackage ./nix/machine/flake.nix {
-                inherit inputs;
-            };
+            system = "x86_64-linux";
 
-            pkgs = machine.pkgs;
-            system = machine.system;
+            # package config
+            pkg = {
+                system = "${system}";
+                config = {
+                    allowUnfree = true;
+                    allowUnfreePredicate = _: true;
+                };
+            };
         in {
-            nixosConfigurations.nixos = pkgs.lib.nixosSystem {
+            # nixpkgs is still used when doing program.enable so make sure it matches our settings.
+            nixpkgs.config = pkg.config;
+            nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
                 inherit system;
                 # this passes inputs in a way that allows modules to "import" them
                 specialArgs = { inherit inputs; };

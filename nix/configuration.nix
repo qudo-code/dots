@@ -2,18 +2,41 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{inputs, config, machine, pkgs, unstable, ... }:
+{inputs, config, unstable, ... }:
 let
-    machine = (import ./machine.nix { inherit inputs; });
-    pkgs = machine.pkgs;
-    unstable = machine.unstable;
+    system = "x86_64-linux";
+
+    # user config
+    user = "qudo";
+    hostname = "nixos";
+    github = {
+        username = "qudo-code";
+        email = "qudo@matr.world";
+    };
+
+    # package config
+    pkg = {
+        system = "${system}";
+        config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+        };
+    };
+
+    # package repo refs for stable and unstable
+    pkgs = import inputs.nixpkgs pkg;
+    unstable = import inputs.nixpkgs-unstable pkg;
 in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "${machine.hostname}";
+  # program.enable will still try to ref nixpkgs
+  # so make sure it uses our pkgs settings
+  nixpkgs.config = pkg.config;
+
+  networking.hostName = "${hostname}";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
@@ -22,14 +45,17 @@ in {
     alacritty
     rofi-wayland
     waybar
-    machine.unstable.zed-editor
+    unstable.zed-editor
+    slack
+    discord
+    signal-desktop
     stow
     flameshot
   ];
 
-  users.users."${machine.user}" = {
+  users.users."${user}" = {
     isNormalUser = true;
-    description = "${machine.user}";
+    description = "${user}";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
         slack
@@ -44,9 +70,9 @@ in {
     ls = "ls --color=tty";
     rebuild = "sudo nixos-rebuild switch --flake ~/.dotfiles/nix";
     open = "nautilus";
-    ghid = "git config --global user.name '${machine.github.username}' & git config --global user.email '${machine.github.email}'";
+    ghid = "git config --global user.name '${github.username}' & git config --global user.email '${github.email}'";
     # https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-    ghssh = "ssh-keygen -t ed25519 -C '${machine.github.email} -N' & eval '$(ssh-agent -s)' & ssh-add ~/.ssh/id_ed25519";
+    ghssh = "ssh-keygen -t ed25519 -C '${github.email} -N' & eval '$(ssh-agent -s)' & ssh-add ~/.ssh/id_ed25519";
   };
 
   programs.hyprland = {

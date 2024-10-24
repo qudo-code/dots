@@ -44,18 +44,23 @@ in {
   programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # Utils
     tree
     git
     alacritty
-    rofi-wayland
-    wofi
-    waybar
+    stow
+
+    # Apps
     unstable.zed-editor
+    vscodium
     slack
     discord
     signal-desktop
-    stow
-    flameshot
+    inputs.zen-browser.packages."${system}".default
+
+    # Hyprland/System
+    rofi-wayland
+    waybar
     hyprlock
     hyprshot
     hyprpaper
@@ -67,11 +72,7 @@ in {
     isNormalUser = true;
     description = "${user}";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-        slack
-        discord
-        inputs.zen-browser.packages."${system}".default
-    ];
+    packages = with pkgs; [];
   };
 
   programs.bash.shellAliases = {
@@ -80,6 +81,7 @@ in {
     ls = "ls --color=tty";
     rebuild = "sudo nixos-rebuild switch --flake ~/.dotfiles/nix";
     open = "nautilus";
+    edit = "zeditor";
     ghid = "git config --global user.name '${github.username}' & git config --global user.email '${github.email}'";
     # https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
     ghssh = "ssh-keygen -t ed25519 -C '${github.email} -N' & eval '$(ssh-agent -s)' & ssh-add ~/.ssh/id_ed25519";

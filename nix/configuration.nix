@@ -49,6 +49,7 @@ in {
     git
     alacritty
     stow
+    fnm # nvm alternative
 
     # Apps
     unstable.zed-editor

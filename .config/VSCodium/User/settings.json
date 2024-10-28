@@ -1,0 +1,10 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.activityBar.location": "top",
+    "window.customTitleBarVisibility": "auto",
+    "workbench.colorTheme": "Sweet Dracula",
+    "editor.fontSize": 12,
+    "terminal.integrated.gpuAcceleration": "off",
+    "disable-hardware-acceleration": true
+  }
+  

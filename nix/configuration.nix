@@ -49,6 +49,8 @@ in {
     git
     alacritty
     stow
+    nodejs
+    nodejs.pkgs.pnpm
 
     # Apps
     unstable.zed-editor

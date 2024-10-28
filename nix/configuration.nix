@@ -49,7 +49,8 @@ in {
     git
     alacritty
     stow
-    fnm # nvm alternative
+    nodejs
+    nodejs.pkgs.pnpm
 
     # Apps
     unstable.zed-editor

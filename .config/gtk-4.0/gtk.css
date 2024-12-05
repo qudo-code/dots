@@ -1,5 +1,0 @@
-/**
- * GTK 4 reads the theme configured by gtk-theme-name, but ignores it.
- * It does however respect user CSS, so import the theme from here.
-**/
-@import url("file:///nix/store/dam9r7hz095f4nd7m0viqg2i7ajgc841-flat-remix-gtk-20240730/share/themes/Flat-Remix-GTK-Grey-Darkest/gtk-4.0/gtk.css");

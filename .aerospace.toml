@@ -1,47 +1,21 @@
-# Reference: https://github.com/i3/i3/blob/next/etc/config
-
-# i3 doesn't have "normalizations" feature that why we disable them here.
-# But the feature is very helpful.
-# Normalizations eliminate all sorts of weird tree configurations that don't make sense.
-# Give normalizations a chance and enable them back.
+# Basic setup
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
-
-# You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
-# Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
-# Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = false
-
-# Start AeroSpace at login
 start-at-login = true
-
-# Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-
-# Notify Sketchybar about workspace change
 exec-on-workspace-change = [
     '/bin/bash',
     '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
-
 after-startup-command = [
   'exec-and-forget borders',
   'exec-and-forget sketchybar'
 ]
-
-# Possible values: (qwerty|dvorak)
-# See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
 preset = 'qwerty'
 
-# Gaps between windows (inner-*) and between monitor edges (outer-*).
-# Possible values:
-# - Constant:     gaps.outer.top = 8
-# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
-#                 In this example, 24 is a default value when there is no match.
-#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
-#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps.inner]
 horizontal = 15
 vertical =   15
@@ -52,42 +26,16 @@ bottom =     10
 top =        10
 right =      10
 
+# Primary keybinds
 [mode.main.binding]
-# See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
-cmd-enter = 'open /Applications/iTerm.app'
-
-# https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
-# cmd-h = [] # Disable "hide application"
-# cmd-alt-h = [] # Disable "hide others"
-
-# i3 wraps focus by default
-cmd-h =         'focus --boundaries-action wrap-around-the-workspace left'
-cmd-j =         'focus --boundaries-action wrap-around-the-workspace down'
-cmd-k =         'focus --boundaries-action wrap-around-the-workspace up'
-cmd-l =          'focus --boundaries-action wrap-around-the-workspace right'
-
+cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
+cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
+cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
+cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
 cmd-shift-h = 'move left'
 cmd-shift-j = 'move down'
 cmd-shift-k = 'move up'
 cmd-shift-l = 'move right'
-cmd-shift-space = 'layout floating tiling' # 'floating toggle' in i3
-
-# Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
-alt-c = 'split horizontal'
-alt-v = 'split vertical'
-alt-f = 'fullscreen'
-alt-s = 'layout v_accordion' # 'layout stacking' in i3
-alt-w = 'layout h_accordion' # 'layout tabbed' in i3
-alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
-
-# Not supported, because this command is redundant in AeroSpace mental model.
-# See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
-# alt-space = 'focus toggle_tiling_floating'
-
-# `focus parent`/`focus child` are not yet supported, and it's not clear whether they
-# should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
-# alt-a = 'focus parent'
-
 cmd-1 = 'workspace 1'
 cmd-2 = 'workspace 2'
 cmd-3 = 'workspace 3'
@@ -98,7 +46,6 @@ cmd-7 = 'workspace 7'
 cmd-8 = 'workspace 8'
 cmd-9 = 'workspace 9'
 cmd-0 = 'workspace 10'
-
 cmd-shift-1 = 'move-node-to-workspace 1'
 cmd-shift-2 = 'move-node-to-workspace 2'
 cmd-shift-3 = 'move-node-to-workspace 3'
@@ -109,10 +56,10 @@ cmd-shift-7 = 'move-node-to-workspace 7'
 cmd-shift-8 = 'move-node-to-workspace 8'
 cmd-shift-9 = 'move-node-to-workspace 9'
 cmd-shift-0 = 'move-node-to-workspace 10'
+cmd-shift-space = 'layout floating tiling'
+cmd-q = 'close'
 
-cmd-q = 'close --quit-if-last-window'
-cmd-shift-c = 'reload-config'
-
+# Window rules
 [[on-window-detected]]
 if.app-id = 'io.beekeeperstudio.desktop'
 run = 'move-node-to-workspace 1'
@@ -145,3 +92,31 @@ run = 'move-node-to-workspace 5'
 if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace 5'
 
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = ['layout floating']
+
+# Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
+# alt-c = 'split horizontal'
+# alt-v = 'split vertical'
+# alt-f = 'fullscreen'
+# alt-s = 'layout v_accordion'
+# alt-w = 'layout h_accordion'
+# alt-e = 'layout tiles horizontal vertical'
+
+# Not supported, because this command is redundant in AeroSpace mental model.
+# See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
+# alt-space = 'focus toggle_tiling_floating'
+
+# `focus parent`/`focus child` are not yet supported, and it's not clear whether they
+# should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
+# alt-a = 'focus parent'
+
+# alt-r = 'mode resize'
+# [mode.resize.binding]
+# h = 'resize width -50'
+# j = 'resize height +50'
+# k = 'resize height -50'
+# l = 'resize width +50'
+# enter = 'mode main'
+# esc = 'mode main'

@@ -57,3 +57,12 @@ Copy/paste to your home directory.
 
 `./.config/borders/` -> `~/.config/borders/`
 
+## App Setup
+### Discord Min Width
+Discord has a really wide min width, make it smaller so it can tile. Add the following to `/Users/[username]/Library/Application Support/discord`.
+
+```json
+  "MIN_WIDTH": 0,
+  "MIN_HEIGHT": 0,
+```
+

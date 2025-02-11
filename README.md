@@ -25,6 +25,7 @@ https://github.com/FelixKratz/SketchyBar
 ```
 brew tap FelixKratz/formulae
 brew install sketchybar
+brew install --cask sf-symbols
 ```
 
 #### Start on Login

@@ -18,20 +18,6 @@ start-at-login = true
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
-# [[on-window-detected]]
-#     if.app-id = 'com.apple.systempreferences'
-#     if.app-name-regex-substring = 'settings'
-#     if.window-title-regex-substring = 'substring'
-#     if.workspace = 'workspace-name'
-#     if.during-aerospace-startup = true
-#     check-further-callbacks = true
-#     run = ['layout floating', 'move-node-to-workspace S']  # The callback itself
-
-# [[on-window-detected]]
-#   if.app-id                       = 'com.brave.Browser'
-#   if.window-title-regex-substring = 'Picture-in-Picture'
-#   run
-
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = [
     '/bin/bash',
@@ -68,7 +54,7 @@ right =      10
 
 [mode.main.binding]
 # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
-# alt-enter = 'exec-and-forget open /Applications/iTerm.app'
+cmd-enter = 'open /Applications/iTerm.app'
 
 # https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 # cmd-h = [] # Disable "hide application"
@@ -78,7 +64,7 @@ right =      10
 cmd-h =         'focus --boundaries-action wrap-around-the-workspace left'
 cmd-j =         'focus --boundaries-action wrap-around-the-workspace down'
 cmd-k =         'focus --boundaries-action wrap-around-the-workspace up'
-cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
+cmd-l =          'focus --boundaries-action wrap-around-the-workspace right'
 
 cmd-shift-h = 'move left'
 cmd-shift-j = 'move down'
@@ -93,7 +79,6 @@ alt-f = 'fullscreen'
 alt-s = 'layout v_accordion' # 'layout stacking' in i3
 alt-w = 'layout h_accordion' # 'layout tabbed' in i3
 alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
-
 
 # Not supported, because this command is redundant in AeroSpace mental model.
 # See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
@@ -125,14 +110,38 @@ cmd-shift-8 = 'move-node-to-workspace 8'
 cmd-shift-9 = 'move-node-to-workspace 9'
 cmd-shift-0 = 'move-node-to-workspace 10'
 
-# cmd-shift-q = 'close'
+cmd-q = 'close --quit-if-last-window'
 cmd-shift-c = 'reload-config'
 
-# alt-r = 'mode resize'
-# [mode.resize.binding]
-# h = 'resize width -50'
-# j = 'resize height +50'
-# k = 'resize height -50'
-# l = 'resize width +50'
-# enter = 'mode main'
-# esc = 'mode main'
+[[on-window-detected]]
+if.app-id = 'io.beekeeperstudio.desktop'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'ch.protonvpn.mac'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.exafunction.windsurf'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.brave.Browser'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run = 'move-node-to-workspace 5'
+

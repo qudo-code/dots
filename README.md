@@ -1,7 +1,8 @@
-![](./doc/demo.png)
 # Dotfiles
-Here's how I setup my Mac.
+Here's how I setup my computers.
+![](./doc/demo.png)
 
+# MacOS
 ## Aerospace WM
 https://github.com/nikitabobko/AeroSpace
 
@@ -13,9 +14,9 @@ Open your launcher and look for Aerospace to launch it.
 
 
 #### Config
-Copy/paste to your home directory. I started with the "like i3" example config and converted it to use vim movement keys. 
+Copy/paste to your home directory. I started with the "like i3" example config and converted it to use vim movement keys.
 
-`./aerospace.toml` -> `~/aerospace.toml`
+`./mac/aerospace.toml` -> `~/aerospace.toml`
 
 
 ## Sketchybar Status Bar
@@ -37,7 +38,7 @@ brew install --cask sf-symbols
 #### Config
 Copy/paste to your home directory.
 
-`./.config/sketchybar/` -> `~/.config/sketchybar/`
+`./mac/.config/sketchybar/` -> `~/.config/sketchybar/`
 
 
 ## Janky Borders
@@ -55,7 +56,7 @@ brew install borders
 #### Config
 Copy/paste to your home directory.
 
-`./.config/borders/` -> `~/.config/borders/`
+`./mac/.config/borders/` -> `~/.config/borders/`
 
 ## App Setup
 ### Discord Min Width
@@ -66,3 +67,9 @@ Discord has a really wide min width, make it smaller so it can tile. Add the fol
   "MIN_HEIGHT": 0,
 ```
 
+# NixOS
+The following NixOS configs are also included.
+ - .zed config
+ - hyprland
+ - waybar
+ - nix config

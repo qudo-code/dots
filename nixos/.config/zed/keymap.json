@@ -1,0 +1,15 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-g": "git_panel::ToggleFocus",
+      "ctrl-i": "assistant2::Chat"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-u": "assistant::InlineAssist"
+    }
+  }
+]

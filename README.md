@@ -72,7 +72,7 @@ Discord has a really wide min width, make it smaller so it can tile. Add the fol
 ```bash
 git clone git@github.com:qudo-code/dots.git ~/dots && ~/dots/nix
 ```
-3. After running the above, you'll have the following aliases and keybinds when using Hyprland.
+2. After running the above, you'll have the following aliases and keybinds when using Hyprland.
 
 **Bash aliases**
 ```

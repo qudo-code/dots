@@ -4,7 +4,7 @@
 {
 	config,
 	pkgs,
-        lib,
+  lib,
 	...
 }:
 {
@@ -32,7 +32,6 @@
     }];
   };
 
-
   # Install packages
   environment.systemPackages = with pkgs; [
     adw-gtk3 # needed for dark mode
@@ -40,12 +39,13 @@
     brightnessctl # to control backlight
     nodejs
     node-gyp
+    neofetch
+    btop
     docker
     vim
     git
     bun
     unzip
-    hyprshot
     nodePackages.prisma
     pnpm
     bun
@@ -62,20 +62,17 @@
     ulauncher # app launcher
     xorg.xbacklight # to control backlight
     blueman # for bluetooth ui
+    networkmanagerapplet
+    hyprshot
+    hyprpaper
   ];
 
   # Enable other programs
-  # programs.firefox.enable = true;
   programs.hyprland.enable = true;
 
   # Docker config
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "qudo" ];
-
-  # How to WIFI:
-  # Had issues getting things to connect with nmcli but for some reason
-  # switching to Gnome, adding the network there, then coming back works.
-  # nmcli device wifi connect <SSID> password <password>
   networking.hostName = "nixos";
 
   # Bluetooth

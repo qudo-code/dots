@@ -3,13 +3,14 @@
     "context": "Workspace",
     "bindings": {
       "ctrl-g": "git_panel::ToggleFocus",
-      "ctrl-i": "assistant2::Chat"
+      "ctrl-e": "project_panel::ToggleFocus",
+      "alt-i": "assistant::ToggleFocus"
     }
   },
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-u": "assistant::InlineAssist"
+      "alt-u": "assistant::InlineAssist"
     }
   }
 ]

@@ -7,8 +7,7 @@
         lib,
 	...
 }:
-{ 
-
+{
   # Allow unstable packages
   nixpkgs.config = {
     allowUnfree = true;
@@ -32,8 +31,8 @@
       };
     }];
   };
-  
- 
+
+
   # Install packages
   environment.systemPackages = with pkgs; [
     adw-gtk3 # needed for dark mode
@@ -46,6 +45,10 @@
     git
     bun
     unzip
+    hyprshot
+    nodePackages.prisma
+    pnpm
+    bun
     wofi
     unstable.waybar # status bar
     unstable.brave
@@ -53,14 +56,13 @@
     unstable.zed-editor
     unstable.code-cursor
     vscode
-    signal-desktop 
+    signal-desktop
     slack
     discord
-    ulauncher # app launcher 
+    ulauncher # app launcher
     xorg.xbacklight # to control backlight
     blueman # for bluetooth ui
   ];
-
 
   # Enable other programs
   # programs.firefox.enable = true;
@@ -139,4 +141,3 @@
 
   system.stateVersion = "24.11"; # Don't change (or go read the docs)
 }
-

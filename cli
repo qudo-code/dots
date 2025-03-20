@@ -1,0 +1,151 @@
+#!/bin/bash
+# ------------------------
+# Setup
+# ------------------------
+pkg_name="dots"
+repo="${HOME}/${pkg_name}"
+
+# Detect/set $os
+# macos, nixos, or whatever the ID in /etc/os/release
+if [[ "$OSTYPE" == "darwin"* ]]; then os="macos";
+elif [[ -f /etc/NIXOS ]]; then os="nixos";
+elif [[ -f /etc/os-release ]]; then
+    source /etc/os-release;
+    os=$ID;
+fi
+
+# ------------------------
+# Config builder utils
+# ------------------------
+replace_in_file() {
+    echo "🔄 '$1' -> '$2' -> $3"
+
+    if [[ "$os" == "macos" ]]; then
+        sed '' "s/$1}/$2/g" $3
+    else
+        sed "s/$1/$2/g" $3
+    fi
+}
+
+# $1 input file/dir
+# $2 destination file/dir
+# $3/$4 text to find/replace after copy
+sync_config() {
+    # Check if dir or file
+    if [ -d "$1" ]; then
+        sudo mkdir -p $2
+        sudo cp -r --force $1 $(dirname $2)
+        echo "📂 $1 -> $2"
+    else
+        sudo mkdir -p $(dirname $2)
+
+        # Use sed to find/replace/copy if $3/$4 provided
+        if [[ -n "$3" && -n "$4" ]]; then
+            if [[ "$os" == "macos" ]]; then
+                sudo sed '' "s/$3}/$4/g" $1 > $2
+            else
+                sudo sed "s/$3/$4/g" $1 > $2
+            fi
+            echo "🔄 $1 -> '$3' -> '$4' -> $2"
+        else
+            sudo cp --force $1 $2
+            echo "📄 $1 -> $2"
+        fi
+    fi
+}
+
+append_config() {
+    cat $1 | echo >> $2
+    echo "++ $1 -> $2"
+}
+
+# Register user config
+source "${repo}/config"
+
+# --------------------
+# CLI commands
+# --------------------
+print_os_info() {
+    echo -e "\nDots CLI"
+    echo "OS:      $os"
+    echo "Home:    $HOME"
+    echo "Command: $1"
+}
+
+print_help() {
+    echo -e "\nHelp"
+    echo "-----------------"
+    echo "✏️ Open configs in editor"
+    echo "~/${pkg_name} edit"
+    echo "~/${pkg_name} e"
+    echo -e "\n➡️ Sync configs with sytem"
+    echo "~/${pkg_name} sync"
+    echo "~/${pkg_name} s"
+    echo -e "\n🛠️ Run ~/dots install step"
+    echo "~/${pkg_name} install"
+    echo -e "~/${pkg_name} i\n"
+}
+
+run_method() {
+    if declare -F $1 >/dev/null; then $1
+    else echo $2
+    fi
+}
+
+# Run sync method for OS
+sync_os() {
+    echo -e "\nStarting sync..."
+    echo "➡️ sync_shared"
+    run_method sync_shared "skipped"
+    echo -e "\n➡️ sync_$os"
+    run_method "sync_$os" "skipped"
+    echo -e "\n✅ Sync $os"
+}
+
+# Run install method for OS
+install_os() {
+    sync_os
+    echo -e "\nStarting install..."
+    echo "🛠️ install_shared"
+    run_method install_shared "skipped"
+    echo -e "\n🛠️ install_$os"
+    run_method "install_$os" "skipped"
+    echo -e "\n✅ Install $os"
+}
+
+# Open editor for OS
+edit_os() {
+    echo "✏️ Opening configs in editor"
+    if [[ "$os" == "macos" ]]; then
+        zed $repo;
+    else
+        zeditor $repo;
+    fi
+}
+
+# Available methods
+declare -A cmds=(
+    ["s"]="sync_os"
+    ["sync"]="sync_os"
+    ["e"]="edit_os"
+    ["edit"]="edit"_os
+    ["i"]="install_os"
+    ["install"]="install_os"
+)
+
+# Intro
+print_os_info
+
+# Match command with method
+method=${cmds[$1]}
+if [[ -n $method ]]; then
+    if declare -F $method >/dev/null; then
+        $method
+    else
+        print_help
+        echo "Command '$1' not setup for '$os'"
+    fi
+else
+    print_help
+    echo "Unknown command"
+fi

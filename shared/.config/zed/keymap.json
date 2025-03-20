@@ -2,15 +2,15 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-g": "git_panel::ToggleFocus",
-      "ctrl-e": "project_panel::ToggleFocus",
+      "alt-g": "git_panel::ToggleFocus",
+      "alt-e": "project_panel::ToggleFocus",
       "alt-i": "assistant::ToggleFocus"
     }
   },
   {
     "context": "Editor",
     "bindings": {
-      "alt-u": "assistant::InlineAssist"
+      "shift-alt-i": "assistant::InlineAssist"
     }
   }
 ]

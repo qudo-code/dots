@@ -46,7 +46,7 @@
     git
     bun
     unzip
-    nodePackages.prisma
+    prisma
     pnpm
     bun
     wofi

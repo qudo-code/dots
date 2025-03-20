@@ -1,0 +1,1 @@
+alias dots="~/dots/cli"

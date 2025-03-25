@@ -80,7 +80,8 @@ run_method() {
     fi
 }
 
-git_push() {
+sync_git() {
+    git pull
     git add .
     git commit -m "sync"
     git push
@@ -89,6 +90,8 @@ git_push() {
 
 # Run sync method for OS
 sync_os() {
+    echo "Pushing..."
+    sync_git
     echo ""
     echo "Syncing..."
     echo "➡️ sync_shared"
@@ -97,8 +100,6 @@ sync_os() {
     echo "➡️ sync_$os"
     run_method "sync_$os" "skipped"
     echo ""
-    echo "Pushing..."
-    git_push
 }
 
 # Run install method for OS

@@ -17,16 +17,6 @@ fi
 # ------------------------
 # Config builder utils
 # ------------------------
-replace_in_file() {
-    echo "🔄 '$1' -> '$2' -> $3"
-
-    if [[ "$os" == "macos" ]]; then
-        sed '' "s/$1}/$2/g" $3
-    else
-        sed "s/$1/$2/g" $3
-    fi
-}
-
 # $1 input file/dir
 # $2 destination file/dir
 # $3/$4 text to find/replace after copy
@@ -34,21 +24,17 @@ sync_config() {
     # Check if dir or file
     if [ -d "$1" ]; then
         sudo mkdir -p $2
-        sudo cp -r --force $1 $(dirname $2)
+        sudo cp -R $1 $(dirname $2)
         echo "📂 $1 -> $2"
     else
         sudo mkdir -p $(dirname $2)
 
         # Use sed to find/replace/copy if $3/$4 provided
         if [[ -n "$3" && -n "$4" ]]; then
-            if [[ "$os" == "macos" ]]; then
-                sudo sed '' "s/$3}/$4/g" $1 > $2
-            else
-                sudo sed "s/$3/$4/g" $1 > $2
-            fi
+            sudo cat $1 | sed "s/$3/$4/g" > $2
             echo "🔄 $1 -> '$3' -> '$4' -> $2"
         else
-            sudo cp --force $1 $2
+            sudo cp  $1 $2
             echo "📄 $1 -> $2"
         fi
     fi
@@ -66,24 +52,26 @@ source "${repo}/config"
 # CLI commands
 # --------------------
 print_os_info() {
-    echo -e "\nDots CLI"
+    echo "Dots CLI"
     echo "OS:      $os"
     echo "Home:    $HOME"
     echo "Command: $1"
 }
 
 print_help() {
-    echo -e "\nHelp"
+    echo "Help"
     echo "-----------------"
     echo "✏️ Open configs in editor"
     echo "~/${pkg_name} edit"
     echo "~/${pkg_name} e"
-    echo -e "\n➡️ Sync configs with sytem"
+    echo ""
+    echo "➡️ Sync configs with sytem"
     echo "~/${pkg_name} sync"
     echo "~/${pkg_name} s"
-    echo -e "\n🛠️ Run ~/dots install step"
+    echo ""
+    echo "🛠️ Run ~/dots install step"
     echo "~/${pkg_name} install"
-    echo -e "~/${pkg_name} i\n"
+    echo "~/${pkg_name} i"
 }
 
 run_method() {
@@ -94,23 +82,26 @@ run_method() {
 
 # Run sync method for OS
 sync_os() {
-    echo -e "\nStarting sync..."
+    echo ""
+    echo "Syncing..."
     echo "➡️ sync_shared"
     run_method sync_shared "skipped"
-    echo -e "\n➡️ sync_$os"
+    echo ""
+    echo "➡️ sync_$os"
     run_method "sync_$os" "skipped"
-    echo -e "\n✅ Sync $os"
+    echo ""
 }
 
 # Run install method for OS
 install_os() {
     sync_os
-    echo -e "\nStarting install..."
+    echo "Installing..."
     echo "🛠️ install_shared"
     run_method install_shared "skipped"
-    echo -e "\n🛠️ install_$os"
+    echo ""
+    echo -"🛠️ install_$os"
     run_method "install_$os" "skipped"
-    echo -e "\n✅ Install $os"
+    echo ""
 }
 
 # Open editor for OS
@@ -123,28 +114,26 @@ edit_os() {
     fi
 }
 
-# Available methods
-declare -A cmds=(
-    ["s"]="sync_os"
-    ["sync"]="sync_os"
-    ["e"]="edit_os"
-    ["edit"]="edit"_os
-    ["i"]="install_os"
-    ["install"]="install_os"
-)
-
 # Intro
-print_os_info
+print_os_info $1
 
-# Match command with method
-method=${cmds[$1]}
-if [[ -n $method ]]; then
-    if declare -F $method >/dev/null; then
-        $method
+run_command() {
+    if declare -F $1 >/dev/null; then
+        $1
     else
         print_help
         echo "Command '$1' not setup for '$os'"
     fi
+}
+
+# Match command with method
+method=${cmds[$1]}
+if [[ "$1" == "s" || "$1" == "sync" ]]; then
+    run_command sync_os
+elif [[ "$1" == "i" || "$1" == "install" ]]; then
+    run_command install_os
+elif [[ "$1" == "e" || "$1" == "edit" ]]; then
+    run_command edit_os
 else
     print_help
     echo "Unknown command"

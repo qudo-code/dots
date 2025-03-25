@@ -13,14 +13,17 @@ sync_shared() {
 # MacOS
 # --------------------
 sync_macos() {
-    # Sync Zed keymaps per OS
-    sync_config "${repo}/shared/.config/zed/keymap.json" "${HOME}/.config/zed/keymap.json" "MODKEY" "cmd"
-    # Sync Aerospace config
-    sync_config "${repo}/macos/.aerospace.toml" "${HOME}/.aerospace.toml"
+    # Folders
     # Sync Janky Borders config
     sync_config "${repo}/macos/.config/borders" "${HOME}/.config/border"
     # Sync Sketchybar config
     sync_config "${repo}/macos/.config/sketchybar" "${HOME}/.config/sketchybar"
+
+    # Files
+    # Sync Zed keymaps per OS
+    sync_config "${repo}/shared/.config/zed/keymap.json" "${HOME}/.config/zed/keymap.json" "MODKEY" "cmd"
+    # Sync Aerospace config
+    sync_config "${repo}/macos/.aerospace.toml" "${HOME}/.aerospace.toml"
 
     # Sync .zshrc shared + os config + source
     sync_config "${repo}/shared/.bashrc" "${HOME}/.zshrc"

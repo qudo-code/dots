@@ -23,7 +23,7 @@ vertical =   15
 [gaps.outer]
 left =       10
 bottom =     10
-top =        10
+top =        35
 right =      10
 
 # Primary keybinds

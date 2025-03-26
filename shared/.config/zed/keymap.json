@@ -17,7 +17,7 @@
     "context": "Editor",
     "bindings": {
       "MODKEY-w": "pane::CloseActiveItem",
-      "shift-MODKEY-w": "pane::CloseActiveItem",
+      "shift-MODKEY-w": "pane::CloseAllItems",
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],

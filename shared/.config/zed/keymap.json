@@ -6,6 +6,7 @@
       "MODKEY-e": "project_panel::ToggleFocus",
       "MODKEY-i": "assistant::ToggleFocus",
       "MODKEY-`": "terminal_panel::ToggleFocus",
+      "MODKEY-w": "pane::CloseActiveItem",
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
@@ -15,6 +16,8 @@
   {
     "context": "Editor",
     "bindings": {
+      "MODKEY-w": "pane::CloseActiveItem",
+      "shift-MODKEY-w": "pane::CloseActiveItem",
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],

@@ -81,6 +81,7 @@ run_method() {
 }
 
 sync_git() {
+    cd $repo
     git pull
     git add .
     git commit -m "sync"

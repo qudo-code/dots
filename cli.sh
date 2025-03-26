@@ -46,7 +46,7 @@ append_config() {
 }
 
 # Register user config
-source "${repo}/config"
+source "${repo}/config.sh"
 
 # --------------------
 # CLI commands

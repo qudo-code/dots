@@ -1,1 +1,1 @@
-alias dots="~/dots/cli.sh"
+alias dots="sh ~/dots/cli.sh"

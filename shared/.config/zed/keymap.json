@@ -16,6 +16,8 @@
   {
     "context": "Editor",
     "bindings": {
+      "MODKEY-]": "pane::SplitRight",
+      "MODKEY-[": "pane::SplitDown",
       "MODKEY-w": "pane::CloseActiveItem",
       "shift-MODKEY-w": "pane::CloseAllItems",
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],

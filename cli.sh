@@ -118,10 +118,15 @@ install_os() {
 # Open editor for OS
 edit_os() {
     echo "✏️ Opening configs in editor"
-    if [[ "$os" == "macos" ]]; then
-        zed $repo;
-    else
+
+    if command -v zeditor >/dev/null 2>&1; then
         zeditor $repo;
+    elif command -v zed >/dev/null 2>&1; then
+        zed $repo;
+    elif command -v cursor >/dev/null 2>&1; then
+        cursor $repo;
+    elif command -v code >/dev/null 2>&1; then
+        code $repo;
     fi
 }
 

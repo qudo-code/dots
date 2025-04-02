@@ -41,7 +41,7 @@ sync_config() {
 }
 
 append_config() {
-    cat $1 | echo >> $2
+    cat $1 >> $2
     echo "++ $1 -> $2"
 }
 

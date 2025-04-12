@@ -74,7 +74,7 @@ sync_macos() {
 
     # Sync .zshrc shared + os config + source
     sync_config "${repo}/shared/.bashrc" "${HOME}/.zshrc"
-    cat "${repo}/macos/.zshrc" >> "${HOME}/.zshrc"
+    sudo cat "${repo}/macos/.zshrc" >> "${HOME}/.zshrc"
     source "${HOME}/.zshrc"
 }
 # --------------------

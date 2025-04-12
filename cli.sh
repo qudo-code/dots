@@ -41,7 +41,7 @@ sync_config() {
 }
 
 append_config() {
-    cat $1 >> $2
+    sudo cat $1 >> $2
     echo "++ $1 -> $2"
 }
 

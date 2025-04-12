@@ -22,16 +22,22 @@ install_macos() {
     brew install borders
     brew install sketchybar
 
-    brew install --cask flameshot
+    # Add SF Symbols used in status bar
     brew install --cask sf-symbols
 
-    # nvm
+    # Screenshots
+    brew install --cask flameshot
+
+    # Install nvm
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
     export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
+    # Set Node version
     nvm install 20
     nvm use 20
+
+    # Update NPM
     npm i -g npm
 
     # bun
@@ -39,6 +45,17 @@ install_macos() {
 
     # pnpm
     npm i -g pnpm
+
+    # Apps
+    brew install --cask slack
+    brew install --cask discord
+    brew install --cask spotify
+    brew install --cask docker
+    brew install --cask beekeeper-studio
+    brew install --cask zed
+    brew install --cask brave-browser
+    brew install --cask signal
+    brew install --cask iterm2
 }
 
 sync_macos() {

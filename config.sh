@@ -9,6 +9,7 @@ sync_shared() {
     # Git config
     sync_config "${repo}/shared/.gitconfig" "${HOME}/.gitconfig"
 }
+
 # --------------------
 # MacOS
 # --------------------

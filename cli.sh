@@ -105,7 +105,6 @@ sync_os() {
 
 # Run install method for OS
 install_os() {
-    sync_os
     echo "Installing..."
     echo "🛠️ install_shared"
     run_method install_shared "skipped"
@@ -113,6 +112,7 @@ install_os() {
     echo -"🛠️ install_$os"
     run_method "install_$os" "skipped"
     echo ""
+    sync_os
 }
 
 # Open editor for OS

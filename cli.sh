@@ -88,7 +88,6 @@ sync_git() {
     git push
 }
 
-
 # Run sync method for OS
 sync_os() {
     echo "Pushing..."

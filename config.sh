@@ -60,6 +60,8 @@ install_macos() {
 }
 
 sync_macos() {
+    sudo
+
     # Folders
     # Sync Janky Borders config
     sync_config "${repo}/macos/.config/borders" "${HOME}/.config/border"

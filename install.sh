@@ -1,4 +1,4 @@
-if [ -f ~/.zsh_history ]; then
+if [ -f '~/.zsh_history' ]; then
     echo "alias dots='~/dots/cli.sh'" >> ~/.zshrc
     source ~/.zshrc
 else

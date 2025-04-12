@@ -12,6 +12,19 @@ sync_shared() {
 # --------------------
 # MacOS
 # --------------------
+install_macos() {
+    # Install Homebrew
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Install Aerospace WM, Sketchybar, and Janky Borders
+    brew install --cask nikitabobko/tap/aerospace
+    brew tap FelixKratz/formulae
+    brew install borders
+    brew install sketchybar
+
+    brew install --cask flameshot
+}
+
 sync_macos() {
     # Folders
     # Sync Janky Borders config

@@ -73,8 +73,8 @@ sync_macos() {
     sync_config "${repo}/macos/.aerospace.toml" "${HOME}/.aerospace.toml"
 
     # Sync .zshrc shared + os config + source
-    sync_config "${repo}/shared/.bashrc" "${HOME}/.zshrc"
-    sudo cat "${repo}/macos/.zshrc" >> "${HOME}/.zshrc"
+    cat "${repo}/shared/.bashrc" "${HOME}/.zshrc"
+    cat "${repo}/macos/.zshrc" >> "${HOME}/.zshrc"
     source "${HOME}/.zshrc"
 }
 # --------------------

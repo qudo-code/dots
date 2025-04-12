@@ -23,6 +23,7 @@ install_macos() {
     brew install sketchybar
 
     brew install --cask flameshot
+    brew install --cask sf-symbols
 }
 
 sync_macos() {

@@ -32,6 +32,7 @@ install_macos() {
 
     nvm install 20
     nvm use 20
+    npm i -g npm
 
     # bun
     curl -fsSL https://bun.sh/install | bash

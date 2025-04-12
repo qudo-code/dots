@@ -60,8 +60,6 @@ install_macos() {
 }
 
 sync_macos() {
-    sudo
-
     # Folders
     # Sync Janky Borders config
     sync_config "${repo}/macos/.config/borders" "${HOME}/.config/border"
@@ -76,7 +74,7 @@ sync_macos() {
 
     # Sync .zshrc shared + os config + source
     sync_config "${repo}/shared/.bashrc" "${HOME}/.zshrc"
-    append_config "${repo}/macos/.zshrc" "${HOME}/.zshrc"
+    cat "${repo}/macos/.zshrc" >> "${HOME}/.zshrc"
     source "${HOME}/.zshrc"
 }
 # --------------------

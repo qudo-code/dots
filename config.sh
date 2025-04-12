@@ -30,11 +30,14 @@ install_macos() {
     export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
+    nvm install 20
+    nvm use 20
+
     # bun
     curl -fsSL https://bun.sh/install | bash
 
     # pnpm
-    curl -fsSL https://get.pnpm.io/install.sh | sh -
+    npm i -g pnpm
 }
 
 sync_macos() {

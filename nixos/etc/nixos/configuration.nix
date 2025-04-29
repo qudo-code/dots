@@ -47,6 +47,7 @@
     bun
     unzip
     prisma
+    openssl
     pnpm
     bun
     wofi

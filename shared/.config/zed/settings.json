@@ -10,6 +10,6 @@
   "telemetry": {
     "metrics": false
   },
-  "ui_font_size": 14,
+  "ui_font_size": 18,
   "buffer_font_size": 14.0
 }

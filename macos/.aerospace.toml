@@ -72,9 +72,9 @@ run = 'move-node-to-workspace 1'
 if.app-id = 'com.exafunction.windsurf'
 run = 'move-node-to-workspace 2'
 
-[[on-window-detected]]
-if.app-id = 'com.brave.Browser'
-run = 'move-node-to-workspace 3'
+# [[on-window-detected]]
+# if.app-id = 'com.brave.Browser'
+# run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'

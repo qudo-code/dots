@@ -76,7 +76,7 @@ sync_macos() {
     rm -f "${HOME}/.zshrc"
     sudo cat "${repo}/shared/.bashrc" >> "${HOME}/.zshrc"
     sudo cat "${repo}/macos/.zshrc" >> "${HOME}/.zshrc"
-    source "${HOME}/.zshrc"
+    sudo source "${HOME}/.zshrc"
 }
 # --------------------
 # NixOS

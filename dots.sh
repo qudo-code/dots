@@ -1,0 +1,11 @@
+#!/bin/bash
+repo_dir="$HOME/git/dots"
+
+# Install macOS apps and dev tools if $2 is "install" or "i"
+if [ "$1" == "install" ] || [ "$1" == "i" ]; then
+    source "${repo_dir}/macos/scripts/install.sh"
+fi
+
+if [ "$1" == "sync" ] || [ "$1" == "s" ]; then
+    source "${repo_dir}/macos/scripts/sync.sh"
+fi

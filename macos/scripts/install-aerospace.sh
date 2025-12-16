@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Install Aerospace WM, Sketchybar, and Janky Borders
 brew install --cask nikitabobko/tap/aerospace
 brew tap FelixKratz/formulae

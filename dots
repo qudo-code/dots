@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 repo_dir="$HOME/git/dots"
 
 # Install macOS apps and dev tools if $2 is "install" or "i"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Apps
 brew install --cask spotify
 brew install --cask brave-browser

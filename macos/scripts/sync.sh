@@ -1,8 +1,6 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 
 copy_directory() {
     local source="$1"
@@ -53,10 +51,9 @@ append_file() {
 }
 
 sync_configs() {
-    # Append to .zshrc if following vars don't exist
-    if ! grep -q "PNPM_HOME" "${HOME}/.zshrc" || ! grep -q "NVM_DIR" "${HOME}/.zshrc"; then
-        append_file "${SCRIPT_DIR}/../.zshrc" "${HOME}/.zshrc"
-        sudo source "${HOME}/.zshrc"
+    # Create .zshrc only if it doesn't exist
+    if [ ! -f "${HOME}/.zshrc" ]; then
+        copy_file "${SCRIPT_DIR}/../.zshrc" "${HOME}/.zshrc"
     fi
     
     # Sync git config
@@ -73,10 +70,9 @@ sync_configs() {
 
     # Copy wallpapers
     copy_directory "${SCRIPT_DIR}/../wallpapers" "${HOME}/.config"
-
-    aerospace reload-config
-
-    brew services restart sketchybar
 }
 
 sync_configs
+source "${HOME}/.zshrc"
+aerospace reload-config
+brew services restart sketchybar

@@ -37,7 +37,9 @@ For macOS, there's a small CLI located at the root of the repo you can call with
 - `cmd + q` - Close window
 
 **Screenshots**
+
 _Requires flameshot to be installed and permissions allowed_
+
 - `cmd + shift + x` - Select an area to screenshot. Copy with `cmd + c` when done.
 
 

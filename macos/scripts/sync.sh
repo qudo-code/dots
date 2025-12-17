@@ -68,6 +68,9 @@ sync_configs() {
     # Sync aerospace sketchybar config
     copy_directory "${SCRIPT_DIR}/../.config/sketchybar" "${HOME}/.config"
 
+    # Sync scratchpad plugin
+    copy_directory "${SCRIPT_DIR}/../.config/aerospace/aerospace-scratchpad" "${HOME}/.config/aerospace"
+
     # Copy wallpapers
     copy_directory "${SCRIPT_DIR}/../wallpapers" "${HOME}/.config"
 }

@@ -16,7 +16,7 @@ set -euo pipefail
 COMMAND="${1:-}"
 SCRATCHPAD="S"
 FIRST_WS="1"
-CURRENT_WS=$(aerospace list-workspaces --focused)
+CURRENT_WS=$(aerospace list-workspaces --focused 2>/dev/null || echo "")
 QUEUE_DIR="$HOME/.config/aerospace/aerospace-scratchpad"
 QUEUE_FILE="$QUEUE_DIR/queue"
 
@@ -51,7 +51,19 @@ queue_first() {
 # Returns the next window ID in the queue after the given window ID
 queue_next_after() {
     local current="$1"
-    local list=($(queue_all))
+    local queue_content
+    queue_content=$(queue_all)
+    # Handle empty queue
+    if [ -z "$queue_content" ]; then
+        echo ""
+        return
+    fi
+    local list=($queue_content)
+    # Check if array has elements before iterating (prevents unbound variable error with set -u)
+    if [ ${#list[@]} -eq 0 ]; then
+        echo ""
+        return
+    fi
     for i in "${!list[@]}"; do
         if [[ "${list[$i]}" == "$current" ]]; then
             if (( i + 1 < ${#list[@]} )); then
@@ -71,12 +83,14 @@ queue_next_after() {
 
 # Returns true if the window exists in Aerospace
 window_exists() {
-    aerospace list-windows --all --format "%{window-id}" | grep -q "$1"
+    [ -z "$1" ] && return 1
+    aerospace list-windows --all --format "%{window-id}" 2>/dev/null | grep -q "$1" || return 1
 }
 
 # Returns true if the window exists on the current workspace
 window_in_current_ws() {
-    aerospace list-windows --workspace "$CURRENT_WS" --format "%{window-id}" | grep -q "$1"
+    [ -z "$CURRENT_WS" ] && return 1
+    aerospace list-windows --workspace "$CURRENT_WS" --format "%{window-id}" 2>/dev/null | grep -q "$1" || return 1
 }
 
 # Ensures the window is floating and ignores errors if it already is
@@ -99,7 +113,7 @@ ensure_floating() {
 
 # Returns the currently focused window ID
 get_focused_window_id() {
-    aerospace list-windows --focused --format "%{window-id}"
+    aerospace list-windows --focused --format "%{window-id}" 2>/dev/null || echo ""
 }
 
 # ------------------------------------------------------------
@@ -159,8 +173,15 @@ show_window() {
 
 # Returns the currently visible scratchpad window on the current workspace
 get_current_visible_window() {
-    for id in $(queue_all); do
-        if window_in_current_ws "$id"; then
+    local queue_content
+    queue_content=$(queue_all)
+    # Handle empty queue
+    if [ -z "$queue_content" ]; then
+        echo ""
+        return
+    fi
+    for id in $queue_content; do
+        if [ -n "$id" ] && window_in_current_ws "$id"; then
             echo "$id"
             return
         fi
@@ -170,13 +191,22 @@ get_current_visible_window() {
 
 # Removes windows from the queue if they are closed
 cleanup_queue() {
-    local list=($(queue_all))
+    local queue_content
+    queue_content=$(queue_all)
     > "$QUEUE_FILE"
-    for id in "${list[@]}"; do
-        if window_exists "$id"; then
-            echo "$id" >> "$QUEUE_FILE"
-        fi
-    done
+    # Handle empty queue
+    if [ -z "$queue_content" ]; then
+        return 0
+    fi
+    local list=($queue_content)
+    # Check if array has elements before iterating (prevents unbound variable error with set -u)
+    if [ ${#list[@]} -gt 0 ]; then
+        for id in "${list[@]}"; do
+            if [ -n "$id" ] && window_exists "$id"; then
+                echo "$id" >> "$QUEUE_FILE"
+            fi
+        done
+    fi
 }
 
 # Shows the next window in the FIFO queue and hides the current one
@@ -203,16 +233,16 @@ show_next_window() {
 main() {
     case "$COMMAND" in
         send)
-            send_focused_to_scratchpad
+            send_focused_to_scratchpad || exit 1
             ;;
         show)
-            show_next_window
+            show_next_window || exit 1
             ;;
         *)
-            echo "Usage: $0 {send|show}"
+            echo "Usage: $0 {send|show}" >&2
             exit 1
             ;;
     esac
 }
 
-main
+main "$@"

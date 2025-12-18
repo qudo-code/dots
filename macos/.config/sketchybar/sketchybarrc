@@ -36,6 +36,7 @@ source $ITEM_DIR/clock.sh
 source $ITEM_DIR/battery.sh
 source $ITEM_DIR/volume.sh
 source $ITEM_DIR/darkside.sh
+source $ITEM_DIR/screencapture.sh
 source $ITEM_DIR/cpu.sh
 # source $ITEM_DIR/wifi.sh
 

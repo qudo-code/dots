@@ -28,7 +28,7 @@ right =      10
 
 # Primary keybinds
 [mode.main.binding]
-# Scratchpad
+cmd-shift-alt-x = 'exec-and-forget bash $HOME/.config/sketchybar/plugins/screencapture_click.sh'
 cmd-shift-alt-enter = 'workspace S'
 cmd-enter = 'exec-and-forget bash $HOME/.config/aerospace/aerospace-scratchpad/scratchpad.sh show'
 cmd-shift-enter = 'exec-and-forget bash $HOME/.config/aerospace/aerospace-scratchpad/scratchpad.sh send'

@@ -42,6 +42,23 @@ _Requires flameshot to be installed and permissions allowed_
 
 - `cmd + shift + x` - Select an area to screenshot. Copy with `cmd + c` when done.
 
+#### Screenrecording
+
+Custom sketchybar plugin that uses ffmpeg for screen recordings. Default output location is `~/recordings`.
+
+- Click the camera icon in the menu bar to start/stop recording.
+- Use `cmd-shift-alt-x` Aerospace keybind.
+
+![](/doc/screenrecord.gif)
+
+<div class="display: flex">
+    <div style="width: 45%;">
+        <img src="/doc/start-recording.png">
+    </div>
+    <div style="width: 45%;">
+        <img src="/doc/stop-recording.png">
+    </div>
+</div>
 
 ## NixOS
 ![](/doc/nix-demo.png)

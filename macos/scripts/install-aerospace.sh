@@ -8,5 +8,6 @@ brew install sketchybar
 # Add SF Symbols used in status bar
 brew install --cask sf-symbols
 
-# Screenshots
+# Screenshots & screen recording
 brew install --cask flameshot
+brew install --cask ffmpeg

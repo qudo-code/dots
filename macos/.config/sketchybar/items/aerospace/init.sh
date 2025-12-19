@@ -1,3 +1,5 @@
+source $HOME/.config/sketchybar/config.sh
+
 sketchybar --add event aerospace_workspace_change
 
 for sid in $(aerospace list-workspaces --all); do
@@ -8,10 +10,10 @@ for sid in $(aerospace list-workspaces --all); do
         background.corner_radius=5 \
         background.height=20 \
         background.drawing=off \
-        icon.padding_left=3 \
+        icon.padding_left=8 \
         icon.padding_right=3 \
         label.align=center \
         label="$sid" \
         click_script="aerospace workspace $sid" \
-        script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+        script="$SKETCHYBAR_ITEMS_DIR/aerospace/update.sh $sid"
 done

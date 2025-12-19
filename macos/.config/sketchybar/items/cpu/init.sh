@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
+source $HOME/.config/sketchybar/config.sh
 
 sketchybar --add item        cpu.top right                 \
-           --set cpu.top     label.font="$FONT:Medium:7" \
+           --set cpu.top     label.font="$FONT:Medium:7"   \
                              label=CPU                     \
                              icon.drawing=off              \
                              width=0                       \
@@ -9,7 +10,7 @@ sketchybar --add item        cpu.top right                 \
                              background.padding_right=10   \
                                                            \
            --add item        cpu.percent right             \
-           --set cpu.percent label.font="$FONT:Bold:12"   \
+           --set cpu.percent label.font="$FONT:Bold:12"    \
                              label=CPU                     \
                              y_offset=-4                   \
                              width=40                      \
@@ -31,4 +32,4 @@ sketchybar --add item        cpu.top right                 \
                              label.drawing=off             \
                              icon.drawing=off              \
                              background.padding_right=10   \
-                             script="$PLUGIN_DIR/cpu.sh"
+                             script="$SKETCHYBAR_ITEMS_DIR/cpu/update.sh"

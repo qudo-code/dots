@@ -1,18 +1,21 @@
-# Basic setup
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 automatically-unhide-macos-hidden-apps = false
 start-at-login = true
+
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
 exec-on-workspace-change = [
     '/bin/bash',
     '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
+
 after-startup-command = [
   'exec-and-forget borders',
   'exec-and-forget sketchybar'
 ]
+
 [key-mapping]
 preset = 'qwerty'
 
@@ -28,18 +31,6 @@ right =      10
 
 # Primary keybinds
 [mode.main.binding]
-cmd-shift-alt-x = 'exec-and-forget bash $HOME/.config/sketchybar/plugins/screencapture_click.sh'
-cmd-shift-alt-enter = 'workspace S'
-cmd-enter = 'exec-and-forget bash $HOME/.config/aerospace/aerospace-scratchpad/scratchpad.sh show'
-cmd-shift-enter = 'exec-and-forget bash $HOME/.config/aerospace/aerospace-scratchpad/scratchpad.sh send'
-cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
-cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
-cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
-cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
-cmd-shift-h = 'move left'
-cmd-shift-j = 'move down'
-cmd-shift-k = 'move up'
-cmd-shift-l = 'move right'
 cmd-1 = 'workspace 1'
 cmd-2 = 'workspace 2'
 cmd-3 = 'workspace 3'
@@ -50,6 +41,15 @@ cmd-7 = 'workspace 7'
 cmd-8 = 'workspace 8'
 cmd-9 = 'workspace 9'
 cmd-0 = 'workspace 10'
+cmd-shift-alt-enter = 'workspace S'
+cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
+cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
+cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
+cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
+cmd-shift-h = 'move left'
+cmd-shift-j = 'move down'
+cmd-shift-k = 'move up'
+cmd-shift-l = 'move right'
 cmd-shift-1 = 'move-node-to-workspace 1'
 cmd-shift-2 = 'move-node-to-workspace 2'
 cmd-shift-3 = 'move-node-to-workspace 3'
@@ -61,6 +61,9 @@ cmd-shift-8 = 'move-node-to-workspace 8'
 cmd-shift-9 = 'move-node-to-workspace 9'
 cmd-shift-0 = 'move-node-to-workspace 10'
 cmd-shift-space = 'layout floating tiling'
+cmd-enter = 'exec-and-forget bash $HOME/.config/aerospace-scratchpad/scratchpad.sh show'
+cmd-shift-enter = 'exec-and-forget bash $HOME/.config/aerospace-scratchpad/scratchpad.sh send'
+cmd-shift-alt-x = 'exec-and-forget bash $HOME/.config/sketchybar/items/screenrecord/click.sh'
 cmd-q = 'close'
 
 # Window rules
@@ -76,9 +79,9 @@ run = 'move-node-to-workspace 1'
 if.app-id = 'com.exafunction.windsurf'
 run = 'move-node-to-workspace 2'
 
-# [[on-window-detected]]
-# if.app-id = 'com.brave.Browser'
-# run = 'move-node-to-workspace 3'
+[[on-window-detected]]
+if.app-id = 'com.brave.Browser'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
@@ -95,32 +98,3 @@ run = 'move-node-to-workspace 5'
 [[on-window-detected]]
 if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace 5'
-
-[[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
-run = ['layout floating']
-
-# Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
-# alt-c = 'split horizontal'
-# alt-v = 'split vertical'
-# alt-f = 'fullscreen'
-# alt-s = 'layout v_accordion'
-# alt-w = 'layout h_accordion'
-# alt-e = 'layout tiles horizontal vertical'
-
-# Not supported, because this command is redundant in AeroSpace mental model.
-# See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
-# alt-space = 'focus toggle_tiling_floating'
-
-# `focus parent`/`focus child` are not yet supported, and it's not clear whether they
-# should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
-# alt-a = 'focus parent'
-
-# alt-r = 'mode resize'
-# [mode.resize.binding]
-# h = 'resize width -50'
-# j = 'resize height +50'
-# k = 'resize height -50'
-# l = 'resize width +50'
-# enter = 'mode main'
-# esc = 'mode main'

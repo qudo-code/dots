@@ -1,6 +1,5 @@
 #!/bin/sh
-
-source $HOME/.config/sketchybar/icons.sh
+source $HOME/.config/sketchybar/config.sh
 
 if [[ $(defaults read -g AppleInterfaceStyle 2>/dev/null) == "Dark" ]]
 then

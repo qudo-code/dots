@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
-
-# make sure it's executable with:
-# chmod +x ~/.config/sketchybar/plugins/aerospace.sh
+source $HOME/.config/sketchybar/config.sh
 
 WORKSPACE_ID="$1"
 SCRATCHPAD_WS="S"
-QUEUE_FILE="$HOME/.config/aerospace/aerospace-scratchpad/queue"
+SCRATCHPAD_QUEUE_FILE="$HOME/.config/aerospace-scratchpad/queue"
 
 # Check if this is the focused workspace
 if [ "$WORKSPACE_ID" = "$FOCUSED_WORKSPACE" ]; then
@@ -16,7 +14,7 @@ elif [ "$WORKSPACE_ID" = "$SCRATCHPAD_WS" ]; then
     CURRENT_WS=$(aerospace list-workspaces --focused 2>/dev/null)
     SCRATCHPAD_VISIBLE=false
     
-    if [ -f "$QUEUE_FILE" ] && [ -s "$QUEUE_FILE" ]; then
+    if [ -f "$SCRATCHPAD_QUEUE_FILE" ] && [ -s "$SCRATCHPAD_QUEUE_FILE" ]; then
         while IFS= read -r window_id; do
             if [ -n "$window_id" ]; then
                 if aerospace list-windows --workspace "$CURRENT_WS" --format "%{window-id}" 2>/dev/null | grep -qx "$window_id"; then
@@ -24,7 +22,7 @@ elif [ "$WORKSPACE_ID" = "$SCRATCHPAD_WS" ]; then
                     break
                 fi
             fi
-        done < "$QUEUE_FILE"
+        done < "$SCRATCHPAD_QUEUE_FILE"
     fi
     
     if [ "$SCRATCHPAD_VISIBLE" = "true" ]; then

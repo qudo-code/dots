@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 copy_directory() {
     local source="$1"
     local dest="$2"
+    local executable="$3"
     
     if [ -z "$source" ] || [ -z "$dest" ]; then
         echo "Usage: copy_directory <source> <destination>"
@@ -13,6 +14,7 @@ copy_directory() {
     
     sudo mkdir -p "$dest"
     sudo cp -R "$source" "$dest"
+    sudo chown -R "${USER}:$(id -gn)" "$dest/$(basename "$source")"
     echo "📂 $source -> $dest"
 }
 
@@ -21,20 +23,13 @@ copy_file() {
     local dest="$2"
     
     if [ -z "$source" ] || [ -z "$dest" ]; then
-        echo "Usage: copy_file <source> <destination> [find] [replace]"
+        echo "Usage: copy_file <source> <destination>"
         return 1
     fi
-    
-    sudo mkdir -p "$(dirname "$dest")"
-    
-    # Use sed to find/replace/copy if $3/$4 provided
-    if [[ -n "$3" && -n "$4" ]]; then
-        sudo cat "$source" | sed "s/$3/$4/g" > "$dest"
-        echo "📄 $source -> '$3' -> '$4' -> $dest"
-    else
-        sudo cp "$source" "$dest"
-        echo "📄 $source -> $dest"
-    fi
+
+    sudo cp "$source" "$dest"
+    sudo chown "${USER}:$(id -gn)" "$dest"
+    echo "📄 $source -> $dest"
 }
 
 append_file() {
@@ -65,11 +60,11 @@ sync_configs() {
     # Sync aerospace borders config
     copy_directory "${SCRIPT_DIR}/../.config/borders" "${HOME}/.config"
 
-    # Sync aerospace sketchybar config
+    # Sync aerospace sketchybar config and plugins
     copy_directory "${SCRIPT_DIR}/../.config/sketchybar" "${HOME}/.config"
 
-    # Sync scratchpad plugin
-    copy_directory "${SCRIPT_DIR}/../.config/aerospace/aerospace-scratchpad" "${HOME}/.config/aerospace"
+    # Sync aerospace scratchpad script
+    copy_directory "${SCRIPT_DIR}/../.config/aerospace-scratchpad" "${HOME}/.config"
 
     # Copy wallpapers
     copy_directory "${SCRIPT_DIR}/../wallpapers" "${HOME}/.config"

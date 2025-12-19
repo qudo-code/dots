@@ -17,7 +17,7 @@ COMMAND="${1:-}"
 SCRATCHPAD="S"
 FIRST_WS="1"
 CURRENT_WS=$(aerospace list-workspaces --focused 2>/dev/null || echo "")
-QUEUE_DIR="$HOME/.config/aerospace/aerospace-scratchpad"
+QUEUE_DIR="$HOME/.config/aerospace-scratchpad"
 QUEUE_FILE="$QUEUE_DIR/queue"
 
 mkdir -p "$QUEUE_DIR"

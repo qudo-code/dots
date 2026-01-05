@@ -32,3 +32,6 @@ brew install planetscale/tap/pscale
 brew install --cask cursor
 brew install --cask zed
 brew install --cask visual-studio-code
+
+# Claude CLI
+curl -fsSL https://claude.ai/install.sh | bash

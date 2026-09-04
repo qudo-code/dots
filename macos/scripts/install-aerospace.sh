@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Install Aerospace WM, Sketchybar, and Janky Borders
 brew install --cask nikitabobko/tap/aerospace
+brew trust felixkratz/formulae
 brew tap FelixKratz/formulae
-brew trust --formula felixkratz/formulae/borders
 brew install borders
 brew services start felixkratz/formulae/borders
+brew trust felixkratz/formulae
 brew install sketchybar
 
 # Add SF Symbols used in status bar

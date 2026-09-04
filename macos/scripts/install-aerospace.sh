@@ -12,5 +12,5 @@ brew install sketchybar
 brew install --cask sf-symbols
 
 # Screenshots & screen recording
-brew install --cask flameshot
+# Flameshot https://github.com/flameshot-org/flameshot/releases
 brew install --cask ffmpeg

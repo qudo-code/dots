@@ -2,6 +2,7 @@
 # Install Aerospace WM, Sketchybar, and Janky Borders
 brew install --cask nikitabobko/tap/aerospace
 brew tap FelixKratz/formulae
+brew trust --formula felixkratz/formulae/borders
 brew install borders
 brew install sketchybar
 

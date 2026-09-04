@@ -4,6 +4,7 @@ brew install --cask nikitabobko/tap/aerospace
 brew tap FelixKratz/formulae
 brew trust --formula felixkratz/formulae/borders
 brew install borders
+brew services start felixkratz/formulae/borders
 brew install sketchybar
 
 # Add SF Symbols used in status bar
